@@ -72,14 +72,14 @@ def main():
     # Test harness, 2 Properties, changing the first Property
 
     # First Property
-    property1 = Property("Duncan Street", 656656.00, True, "Rotorua", 3, "Fenton Park")
+    property1 = Property("67 Duncan Street", 656656.00, True, "Rotorua", 3, "Fenton Park")
     # Printing the object code and the corresponding property listing title
     print(property1)
     # Print using method
     print(property1.PropertyListingInfo())
 
     # Changing first Property's properties
-    property1.ListingTitle = "Bell Road"
+    property1.ListingTitle = "5 Bell Road"
     property1.City = "Tauranga"
     property1.ListingPrice = 786784.00
     property1.NumBedrooms = 4
@@ -92,7 +92,7 @@ def main():
     print(f"{property1.PropertyListingInfo()}\n")
 
     # Second Property
-    property2 = Property("Hatch Street", 853854.00, False, "Auckland", 2, "Albany")
+    property2 = Property("4 Hatch Street", 853854.00, False, "Auckland", 2, "Albany")
     # Printing the object code and the corresponding property listing title
     print(property2)
     # Print using properties in a more formatted manner
