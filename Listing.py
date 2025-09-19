@@ -82,6 +82,8 @@ def main():
     # print(listing1)
     # # Print using method
     # print(f"{listing1.DisplayListing()}\n")
+
+    # # Changing the first listing's properties
     # listing1.ListingTitle = "Pear"
     # listing1.ListingPrice = "3.99"
     # listing1.Condition = "Used"
@@ -97,5 +99,6 @@ def main():
     # # Print using properties
     # print(f"{listing2.ListingTitle},${listing2.ListingPrice},{listing2.Condition}")
     pass
+
 if __name__ == "__main__":
     main()
