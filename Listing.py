@@ -74,28 +74,28 @@ class Listing:
         return self._fullinfo
 
 def main():
-    # Test harness, putting in 2 objects, changing the first object
+    # # Test harness, putting in 2 objects, changing the first object
 
-    # First Object
-    listing1 = Listing("Apple", "2.00", "New")
-    # Printing the object code and the corresponding listing title
-    print(listing1)
-    # Print using method
-    print(f"{listing1.DisplayListing()}\n")
-    listing1.ListingTitle = "Pear"
-    listing1.ListingPrice = "3.99"
-    listing1.Condition = "Used"
-    # Reprinting the object code and the corresponding listing title - Should print same code but now different Listing Title
-    print(listing1)
-    # Print using method
-    print(f"{listing1.DisplayListing()}\n")
+    # # First Object
+    # listing1 = Listing("Apple", "2.00", "New")
+    # # Printing the object code and the corresponding listing title
+    # print(listing1)
+    # # Print using method
+    # print(f"{listing1.DisplayListing()}\n")
+    # listing1.ListingTitle = "Pear"
+    # listing1.ListingPrice = "3.99"
+    # listing1.Condition = "Used"
+    # # Reprinting the object code and the corresponding listing title - Should print same code but now different Listing Title
+    # print(listing1)
+    # # Print using method
+    # print(f"{listing1.DisplayListing()}\n")
     
-    # Second object(listing)
-    listing2 = Listing("Banana", "2.50", "Used")
-    # Printing the object code and the corresponding listing title
-    print(listing2)
-    # Print using properties
-    print(f"{listing2.ListingTitle},${listing2.ListingPrice},{listing2.Condition}")
-
+    # # Second object(listing)
+    # listing2 = Listing("Banana", "2.50", "Used")
+    # # Printing the object code and the corresponding listing title
+    # print(listing2)
+    # # Print using properties
+    # print(f"{listing2.ListingTitle},${listing2.ListingPrice},{listing2.Condition}")
+    pass
 if __name__ == "__main__":
     main()
