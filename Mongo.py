@@ -9,7 +9,7 @@ import json
 from MarketPlace import MarketPlace
 from pprint import pprint
 
-uri = 
+uri =
 
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
@@ -26,7 +26,7 @@ try:
     
     for listing in listings:
         print(f"Listing title: '{listing['ListingTitle']}'")
-        listing = MarketPlace(f"{listing['ListingTitle']}", 244.99, "New", "This is a nice watch", "0215644434", "jeff34543@gmail.com")
+        listing = MarketPlace(listing['ListingTitle'], listing['ListingPrice'], listing['Condition'], listing['Description'], listing['PhoneNum'], listing['Email'], listing['sellerName'], listing['url'])
         storedListings.append(listing)
         
     for x in storedListings:
