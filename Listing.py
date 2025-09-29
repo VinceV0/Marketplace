@@ -80,7 +80,7 @@ def main():
     # # Test harness, putting in 2 objects, changing the first object
 
     # # First Object
-    # listing1 = Listing("Apple", "2.00", "New")
+    # listing1 = Listing("Apple", 2.00, "New")
     # # Printing the object code and the corresponding listing title
     # print(listing1)
     # # Print using method
@@ -88,7 +88,7 @@ def main():
 
     # # Changing the first listing's properties
     # listing1.ListingTitle = "Pear"
-    # listing1.ListingPrice = "3.99"
+    # listing1.ListingPrice = 3.99
     # listing1.Condition = "Used"
     # # Reprinting the object code and the corresponding listing title - Should print same code but now different Listing Title
     # print(listing1)
@@ -96,7 +96,7 @@ def main():
     # print(f"{listing1.DisplayListing()}\n")
     
     # # Second object(listing)
-    # listing2 = Listing("Banana", "2.50", "Used")
+    # listing2 = Listing("Banana", 2.50, "Used")
     # # Printing the object code and the corresponding listing title
     # print(listing2)
     # # Print using properties
