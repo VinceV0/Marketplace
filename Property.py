@@ -16,10 +16,13 @@ class Property(Listing):
         
         # Although the 6-digit integer generator method was inherited
         # 'code' was not inherited as it has a private access modifier, I have reinitilized it here
-        # Stores Object ID
+        # Stores unique Object ID an integer
         self.__code = len(self.uniqueNums)
+        # Stores the city the property is located in
         self._city = city
+        # Stores the number of bedrooms the property has
         self._numBedrooms = numBedrooms
+        # Stores the suburb the property is located in
         self._suburb = suburb
 
     # If in case the object is directly called it is easily identified by the code and title

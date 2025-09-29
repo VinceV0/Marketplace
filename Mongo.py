@@ -84,7 +84,7 @@ def main():
 ####################################################################################################################
     # # CREATE
     # # Simluation creating a new listing
-    # listing1 = MarketPlace("Lamp", 25.00, "Used", "A nice tall lamp with a black lampshade", "0224554389", "greg458823@gmail.com", "Gregory Gordon", "https://pngimg.com/d/google_PNG19644.png")
+    # listing1 = MarketPlace("Lamp", 25, "Used", "A nice tall lamp with a black lampshade", "0224554389", "greg458823@gmail.com", "Gregory Gordon", "https://pngimg.com/d/google_PNG19644.png")
     # # Append the new listing to the stored listings
     # mongo.get_StoredListings().append(listing1)
 
@@ -107,9 +107,9 @@ def main():
     i = 1
     while i < len(mongo.get_StoredListings()):
         if mongo.get_StoredListings()[i].ListingTitle == "Lamp":
-            print(f"index: {i}, code: {i + 1}")
+            print(f"index: {i}")
         i += 1
-    # From this I can delete the listing based on the index
-    
+    # From this I can delete/edit the listing based on the index
+
 if __name__ == "__main__":
     main()

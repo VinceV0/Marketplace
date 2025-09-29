@@ -13,10 +13,13 @@ class Listing:
     def __init__(self,  listingTitle:str, listingPrice:float, condition:str):
         # Calls a method to generate a unique randomly generated 6-digit number
         self.gen = self.genUnique()
-        # Stores Object ID
+        # Stores unique Object ID an integer
         self.__code = len(self.uniqueNums)
+        # Stores the listing title
         self._listingTitle = listingTitle
+        # Stores the listing price as a float
         self._listingPrice = listingPrice
+        # Stores the condition of the listing - E.g. New, Used
         self._condition = condition
     
     # Generate a UNIQUE 6-digit integer

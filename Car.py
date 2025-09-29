@@ -14,8 +14,9 @@ class Car(Listing):
         super().__init__(listingTitle, listingPrice, condition)
         # Although the 6-digit integer generator method was inherited
         # 'code' was not inherited as it has a private access modifier, I have reinitilized it here
-        # Stores Object ID
+        # Stores unique Object ID an integer
         self.__code = len(self.uniqueNums)
+        # Stores the registration number of the vehicle
         self._carRego = carRego
 
     # If in case the object is directly called it is easily identified by the code and title
