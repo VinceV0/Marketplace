@@ -5,6 +5,10 @@
 
 from Listing import Listing
 
+# This Property class inherits from the Listing class
+# This focuses on listings for Properties(Houses - Real estate)
+# This class in addition to the Listing class, overrides the condition to say if the property is newly built or not
+# It also adds where the property is located - the city, the suburb, and the number of bedrooms the listing has.
 class Property(Listing):
     # Array of known UNIQUE 6 digits numbers
     uniqueNums = []

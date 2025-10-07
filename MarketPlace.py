@@ -5,6 +5,13 @@
 
 from Listing import Listing
 
+# This MarketPlace class inherits from the Listing class
+# This focuses on listings for MarketPlace, which contains a generic listings, such as household items
+# of which the users can view, buy or sell these listings
+# In addition to the base Listing class, this MarketPlace app displays the description of the listing
+# the sellers phone number and the seller's mail so the buyer can contact them
+# In addition it also contains the seller's name
+# Each listing also has a corresponding URL to hold the URL for image of the listing
 class MarketPlace(Listing):
     # Array of known UNIQUE 6 digits numbers
     uniqueNums = []
@@ -80,42 +87,43 @@ class MarketPlace(Listing):
     SellerName = property(GetSellerName,SetSellerName)
     Url = property(GetURL,SetURL)
     
+    # Displaying/returning the Market Listing Information
     def MarketListingInfo(self):
         self._fullinfo = f"{self.GetCondition()}, {self.GetListingTitle()}, {self.GetListingPrice():.2f}, {self.GetDescription()}, {self.GetPhoneNum()}, {self.GetEmail()}, {self.GetSellerName()}, {self.GetURL()}"
         return self._fullinfo
 
 def main():
-    # # Test Harness
-    #                 # listingTitle:str, listingPrice:float, condition:str, description:str, phoneNum:str, email:str
-    # # First Listing
-    # listing1 = MarketPlace("Gold Watch", 244.99, "New", "This is a nice watch", "0215644434", "jeff34543@gmail.com", "Jeff Gold", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png")
+    # Test Harness
+                    # listingTitle:str, listingPrice:float, condition:str, description:str, phoneNum:str, email:str
+    # First Listing
+    listing1 = MarketPlace("Gold Watch", 244.99, "New", "This is a nice watch", "0215644434", "jeff34543@gmail.com", "Jeff Gold", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png")
 
-    # # Printing the object code and the corresponding listing title
-    # print(listing1)
-    # # Print using method
-    # print(listing1.MarketListingInfo())
+    # Printing the object code and the corresponding listing title
+    print(listing1)
+    # Print using method
+    print(listing1.MarketListingInfo())
 
-    # # Changing the first Listing's property
-    # listing1.ListingTitle = "Vintage Watch"
-    # listing1.ListingPrice = 123943.00
-    # listing1.Condition = "Used"
-    # listing1.Description = "This watch has been in the family for more than a century"
-    # listing1.PhoneNum = "0218743456"
-    # listing1.Email = "jenny3434@gmail.com"
-    # listing1.SellerName = "Jenny Gold"
-    # listing1.Url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s"
+    # Changing the first Listing's property
+    listing1.ListingTitle = "Vintage Watch"
+    listing1.ListingPrice = 123943.00
+    listing1.Condition = "Used"
+    listing1.Description = "This watch has been in the family for more than a century"
+    listing1.PhoneNum = "0218743456"
+    listing1.Email = "jenny3434@gmail.com"
+    listing1.SellerName = "Jenny Gold"
+    listing1.Url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2sSeQqjaUTuZ3gRgkKjidpaipF_l6s72lBw&s"
 
-    # # Printing the object code and the corresponding listing title
-    # print(f"\n{listing1}")
-    # # Print using method
-    # print(f"{listing1.MarketListingInfo()}\n")
+    # Printing the object code and the corresponding listing title
+    print(f"\n{listing1}")
+    # Print using method
+    print(f"{listing1.MarketListingInfo()}\n")
 
-    # # Second listing
-    # listing2 = MarketPlace("Lamp", 25.00, "Used", "A nice tall lamp with a black lampshade", "0224554389", "greg458823@gmail.com", "Gregory Gordon", "https://pngimg.com/d/google_PNG19644.png")
-    # # Printing the object code and corresponding listing title
-    # print(listing2)
-    # # Print using properties in a more formatted manner
-    # print(f"Title:\t\t\t{listing2.ListingTitle} \nPrice:\t\t\t${listing2.ListingPrice:.2f} \nCondition:\t\t{listing2.Condition} \nDescription:\t\t{listing2.Description} \nPhone Number:\t\t{listing2.PhoneNum} \nEmail:\t\t\t{listing2.Email} \nSeller Name:\t\t{listing2.SellerName} \nURL:\t\t\t{listing2.Url}")
-    pass
+    # Second listing
+    listing2 = MarketPlace("Lamp", 25.00, "Used", "A nice tall lamp with a black lampshade", "0224554389", "greg458823@gmail.com", "Gregory Gordon", "https://pngimg.com/d/google_PNG19644.png")
+    # Printing the object code and corresponding listing title
+    print(listing2)
+    # Print using properties in a more formatted manner
+    print(f"Title:\t\t\t{listing2.ListingTitle} \nPrice:\t\t\t${listing2.ListingPrice:.2f} \nCondition:\t\t{listing2.Condition} \nDescription:\t\t{listing2.Description} \nPhone Number:\t\t{listing2.PhoneNum} \nEmail:\t\t\t{listing2.Email} \nSeller Name:\t\t{listing2.SellerName} \nURL:\t\t\t{listing2.Url}")
+
 if __name__ == "__main__":
     main()

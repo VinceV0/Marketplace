@@ -6,6 +6,11 @@
 # Any print statements are for testing purposes
 import random
 
+# This listing class is used as the basis for holding and generating a generic listing information 
+# for the inherited classes for the MarketPlace type App, so users can view, buy or sell these listings
+# Each listing will have its listing title, its price and the condition that the listing is in
+# Each listing has its own unique generated code that can be queried on
+# Each listing has its own unique randomly generated 6-digit number
 class Listing:
     # Array of known UNIQUE 6 digits numbers
     uniqueNums = []
@@ -77,31 +82,30 @@ class Listing:
         return self._fullinfo
 
 def main():
-    # # Test harness, putting in 2 objects, changing the first object
+    # Test harness, putting in 2 objects, changing the first object
 
-    # # First Object
-    # listing1 = Listing("Apple", 2.00, "New")
-    # # Printing the object code and the corresponding listing title
-    # print(listing1)
-    # # Print using method
-    # print(f"{listing1.DisplayListing()}\n")
+    # First Object
+    listing1 = Listing("Apple", 2.00, "New")
+    # Printing the object code and the corresponding listing title
+    print(listing1)
+    # Print using method
+    print(f"{listing1.DisplayListing()}\n")
 
-    # # Changing the first listing's properties
-    # listing1.ListingTitle = "Pear"
-    # listing1.ListingPrice = 3.99
-    # listing1.Condition = "Used"
-    # # Reprinting the object code and the corresponding listing title - Should print same code but now different Listing Title
-    # print(listing1)
-    # # Print using method
-    # print(f"{listing1.DisplayListing()}\n")
+    # Changing the first listing's properties
+    listing1.ListingTitle = "Pear"
+    listing1.ListingPrice = 3.99
+    listing1.Condition = "Used"
+    # Reprinting the object code and the corresponding listing title - Should print same code but now different Listing Title
+    print(listing1)
+    # Print using method
+    print(f"{listing1.DisplayListing()}\n")
     
-    # # Second object(listing)
-    # listing2 = Listing("Banana", 2.50, "Used")
-    # # Printing the object code and the corresponding listing title
-    # print(listing2)
-    # # Print using properties
-    # print(f"{listing2.ListingTitle},${listing2.ListingPrice},{listing2.Condition}")
-    pass
+    # Second object(listing)
+    listing2 = Listing("Banana", 2.50, "Used")
+    # Printing the object code and the corresponding listing title
+    print(listing2)
+    # Print using properties
+    print(f"{listing2.ListingTitle},${listing2.ListingPrice},{listing2.Condition}")
 
 if __name__ == "__main__":
     main()

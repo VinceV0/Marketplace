@@ -10,12 +10,17 @@ import json
 # Using the MarketPlace class
 from MarketPlace import MarketPlace
 
+# This Mongo class is used for pushing and pulling data from the Mongo Database and utilizes pymongo to do this
+# I can read from the database, put the data into the MarketPlace class to create objects
+# I can also then write to the database with any changes made to the imported data
+# While the data is in the Python program I can perform Create, Read, Update and Delete operations on it
+# I can also get the index of a specific listing
 class Mongo:
     # Constructor initializes the connection to the MongoDB
     # Reads from the MongoDB collection and imports objects(listings) into a 'listings' list
     def __init__(self):
         # Connection to MongoDB cluster
-        self.uri = 
+        self.uri = "mongodb+srv://30036567:1035@cluster0.9m2co.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
         # Create a new client and connect to the server
         self.client = MongoClient(self.uri, server_api=ServerApi('1'))

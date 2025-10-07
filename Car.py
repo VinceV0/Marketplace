@@ -5,6 +5,9 @@
 
 from Listing import Listing
 
+# This Car class inherits from the Listing class
+# This focuses on listings for Cars
+# The only addition to the listing class is that each car has a carRego which is the car's License Plate
 class Car(Listing):
     # Array of known UNIQUE 6 digits numbers
     uniqueNums = []
