@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>ChurFindsLogo.png</file>
+  </qresource>
+</RCC>

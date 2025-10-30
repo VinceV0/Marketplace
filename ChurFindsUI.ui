@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Main</class>
+ <widget class="QMainWindow" name="Main">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1119</width>
+    <height>750</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Chur Finds Marketplace</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <activeon>ChurFindsLogo.png</activeon>
+   </iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #276E91; /* Replace with your desired blue hex code */
+}
+
+QWidget#centralwidget {
+    /* Sets the color for the main content area */
+    background-color: #276E91; 
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="CompanyName">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>10</y>
+      <width>551</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: #FFFFFF; /* Sets the text color to the bright logo blue */
+    font-size: 36pt; /* You can also change size here */
+}</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt;Chur Finds&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="CompanyLogo">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>20</y>
+      <width>111</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>ChurFindsLogo.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>200</y>
+      <width>890</width>
+      <height>390</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="DeleteListingButton">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>620</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton#DeleteListingButton {
+/* Keeping Search Button style the same as before for contrast */
+background-color: #FF0033;
+color: white;
+border-radius: 8px;
+padding: 10px 15px;
+border: 2px solid #C20027;
+font-weight: bold;
+font-size: 8pt;
+}
+
+QPushButton#DeleteListingButton:hover {
+background-color: #C20027;
+}
+
+QPushButton#DeleteListingButton {
+/* Keeping Search Button style the same as before for contrast */
+background-color: #FF0033;
+color: white;
+border-radius: 8px;
+padding: 10px 15px;
+border: 2px solid rgb(149, 0, 0);
+font-weight: bold;
+font-size: 8pt;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Delete Listing</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>14</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="EditListingButton">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>620</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton#EditListingButton {
+/* Keeping Search Button style the same as before for contrast */
+background-color: ;
+color: rgb(0, 0, 0);
+border-radius: 8px;
+padding: 10px 15px;
+border: 2px solid rgb(0, 0, 0);
+font-weight: bold;
+font-size: 8pt;
+}
+
+QPushButton#EditListingButton:hover {
+background-color: rgb(46, 131, 174);
+}
+
+QPushButton#EditListingButton {
+/* Keeping Search Button style the same as before for contrast */
+background-color: #rgb(0, 0, 0);
+color: rgb(0, 0, 0);
+border-radius: 8px;
+padding: 10px 15px;
+border: 2px solid #rgb(0, 0, 0);
+font-weight: bold;
+font-size: 8pt;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Edit Listing</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>14</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AddListingButton">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>620</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton#AddListingButton:hover {
+background-color: #276E91;
+}
+
+QPushButton#AddListingButton {
+/* Keeping Search Button style the same as before for contrast */
+background-color: rgb(80, 165, 255);
+color: white;
+border-radius: 8px;
+padding: 10px 15px;
+border: 2px solid #41B8F2;
+font-weight: bold;
+font-size: 8pt;
+}</string>
+    </property>
+    <property name="text">
+     <string>Add Listing</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>14</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="FormTitle">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>110</y>
+      <width>301</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Items</string>
+    </property>
+   </widget>
+   <zorder>CompanyLogo</zorder>
+   <zorder>listWidget</zorder>
+   <zorder>DeleteListingButton</zorder>
+   <zorder>EditListingButton</zorder>
+   <zorder>AddListingButton</zorder>
+   <zorder>CompanyName</zorder>
+   <zorder>FormTitle</zorder>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1119</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuChur_Finds_Marketplace">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="actionSave_to_Mongo_Database"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menuChur_Finds_Marketplace"/>
+  </widget>
+  <action name="actionSave_to_Mongo_Database">
+   <property name="text">
+    <string>Save to Mongo Database</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="assest.qrc"/>
+ </resources>
+ <connections/>
+</ui>
