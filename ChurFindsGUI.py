@@ -1,3 +1,12 @@
+# Vince Vagay - 30036567
+# Task 3
+
+# This GUI was rapidly developed alongside Gemini 2.5 Flash and ChatGPT - GPT5
+
+# I placed each widget on the screen.
+# I manually did the alignments for the listbox.
+# I manually did the Combobox, everything else was mainly me asking AI how to style something.
+
 import sys
 import os
 from PyQt5.QtWidgets import (
@@ -7,6 +16,8 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QSize 
 from PyQt5.QtGui import QIcon, QFont 
 from PyQt5 import QtWidgets, uic
+
+import processing
 
 try:
     from Mongo import Mongo 
@@ -18,6 +29,17 @@ except ImportError:
             # Returns empty list as per user request to avoid dummy listings
             return []
 # ----------------------------------------------------------------------------------
+
+# Options for the combobox of conditions
+CONDITION_OPTIONS = [
+        "New", 
+        "Used", 
+        "Used - Like New", 
+        "Used - Good", 
+        "For Parts/Not Working"
+    ]
+
+# Binds the cancel button to close the current window
 def bind_cancel_button(window):
     if hasattr(window, "CancelButton"):
         window.CancelButton.clicked.connect(window.close)
@@ -27,6 +49,12 @@ class EditListingForm(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi("ChurFindsEdit.ui", self)  # Load your UI file
         self.CancelButton.clicked.connect(self.close)
+        if hasattr(self, 'ConditionOptions'):
+            # Populate the QComboBox
+            self.ConditionOptions.addItems(CONDITION_OPTIONS)
+            
+            # Set the first option "New" as the default selection
+            self.ConditionOptions.setCurrentIndex(0)
 
 class EditListingWindow(QMainWindow):
     def __init__(self):
@@ -88,6 +116,12 @@ class AddListingForm(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi("ChurFindsAdd.ui", self)  # Load your UI file
         self.CancelButton.clicked.connect(self.close)
+        if hasattr(self, 'ConditionOptions'):
+            # Populate the QComboBox
+            self.ConditionOptions.addItems(CONDITION_OPTIONS)
+            
+            # Set the first option "New" as the default selection
+            self.ConditionOptions.setCurrentIndex(0)
 
 class AddListingWindow(QMainWindow):
     def __init__(self):
@@ -144,7 +178,7 @@ class AddListingWindow(QMainWindow):
             }
         """)
         
-
+# Everything below this line is purely AI coded, I only added \t to the listbox string formatting
 # ----------------------------------------------------------------------------------
 
 
@@ -216,43 +250,43 @@ class MarketplaceTester(QMainWindow):
             
             # Applying styling globally (buttons, list widget, background)
             self.setStyleSheet("""
-        QMainWindow { background-color: #276F91; color: white; }
-        QLabel#CompanyName { 
-            font-size: 20pt; font-weight: bold; 
-            qproperty-alignment: 'AlignHCenter'; 
-            margin-bottom: 10px;
-        }
-        QListWidget { 
-             background-color: #385B75; color: white; 
-             border: 2px solid #1E5670; border-radius: 8px;
-        }
-        QListWidget::item:selected {
-            background-color: #34C4C2; 
-            color: black;
-        }
-        QLabel#output_label {
-            color: white; padding: 10px; background-color: #1f3340; 
-            border-radius: 5px; min-height: 80px;
-        }
-        QPushButton {
-            min-height: 40px; 
-            min-width: 140px; 
-            padding: 8px 20px;
-            background-color: #34C4C2; color: #000000;
-            border: none; border-radius: 8px; font-weight: bold;
-        }
-        QPushButton#EditListingButton {
-            background-color: #276F91;
-            color: white;
-        }
-        QPushButton:hover { 
-            background-color: #4edce4; 
-        }
-        QPushButton#EditListingButton:hover {
-            background-color: #385B75;
-            color: white;
-        }
-    """)
+                QMainWindow { background-color: #276F91; color: white; }
+                QLabel#CompanyName { 
+                    font-size: 20pt; font-weight: bold; 
+                    qproperty-alignment: 'AlignHCenter'; 
+                    margin-bottom: 10px;
+                }
+                QListWidget { 
+                    background-color: #385B75; color: white; 
+                    border: 2px solid #1E5670; border-radius: 8px;
+                }
+                QListWidget::item:selected {
+                    background-color: #34C4C2; 
+                    color: black;
+                }
+                QLabel#output_label {
+                    color: white; padding: 10px; background-color: #1f3340; 
+                    border-radius: 5px; min-height: 80px;
+                }
+                QPushButton {
+                    min-height: 40px; 
+                    min-width: 140px; 
+                    padding: 8px 20px;
+                    background-color: #34C4C2; color: #000000;
+                    border: none; border-radius: 8px; font-weight: bold;
+                }
+                QPushButton#EditListingButton {
+                    background-color: #276F91;
+                    color: white;
+                }
+                QPushButton:hover { 
+                    background-color: #4edce4; 
+                }
+                QPushButton#EditListingButton:hover {
+                    background-color: #385B75;
+                    color: white;
+                }
+            """)
             
             # CRITICAL for alignment: Set Monospaced Font
             from PyQt5.QtGui import QFont # Ensure QFont is accessible
@@ -265,7 +299,6 @@ class MarketplaceTester(QMainWindow):
         except FileNotFoundError:
             print(f"Error: '{ui_file_name}' not found at current path. Falling back to code-based UI with stable layout.")
             self.setup_fallback_ui() # Call the fallback method
-            
         
         # --- Setting the Application Icon ---
         try:
@@ -309,7 +342,7 @@ class MarketplaceTester(QMainWindow):
 
     # --- LISTING DISPLAY METHODS (UPDATED COLUMN ORDER) ---
     def load_listings(self, listings_to_load):
-        """Populates the QListWidget with Item Title, Price."""
+        # Populates the QListWidget with Item Title, Price.
         if not hasattr(self, 'listWidget') or self.listWidget is None:
             return 
         
@@ -375,7 +408,7 @@ class MarketplaceTester(QMainWindow):
 
             title = f"{listing_obj.GetListingTitle()}\t\t"
             # full_description = listing_obj.GetDescription() 
-            price_text = f"\t$ {listing_obj.GetListingPrice():.2f} "
+            price_text = f"\t$ {listing_obj.GetListingPrice():.2f}  "
             condition_text = f"\t{listing_obj.GetCondition()}"
             
             # --- 1. Format Item (Title) ---
@@ -411,7 +444,7 @@ class MarketplaceTester(QMainWindow):
             self.listWidget.addItem(formatted_item)
             
     def handle_listing_click(self, row_index):
-        """Called when a list item is clicked."""
+        # Called when a list item is clicked.
         
         # Adjust index because we added a header (index 0) and separator line (index 1)
         data_index = row_index - 2 
@@ -434,11 +467,9 @@ class MarketplaceTester(QMainWindow):
 
     # --- Fallback UI for testing without the .ui file (PURE LAYOUT) ---
     def setup_fallback_ui(self):
-        """
-        Sets up the UI if the .ui file is not found.
-        Includes buttons and uses layouts for responsiveness.
-        """
-        
+        # Sets up the UI if the .ui file is not found.
+        # Includes buttons and uses layouts for responsiveness.
+
         # 1. Initialize Elements using REQUIRED NAMES
         self.listWidget = QListWidget(objectName='listWidget') 
         self.output_label = QLabel("Select a listing above to see details.", objectName='output_label')
@@ -548,11 +579,10 @@ class MarketplaceTester(QMainWindow):
         # Connect the Add Listing button to the new method
         self.EditListingButton.clicked.connect(self.open_edit_listing_form)
 
-
 if __name__ == '__main__':
-    # This message will only appear if the imports failed and the dummy classes were used
+    # This message will only appear if the imports failed
     if 'Mongo' in globals() and 'MarketPlace' in globals() and not hasattr(MarketPlace, 'GetListingTitle'):
-        print("Using minimal dummy data/classes for execution.")
+        print("Mongo failed to import.")
         
     app = QApplication(sys.argv)
     app.setStyle("Fusion") 
