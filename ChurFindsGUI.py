@@ -30,6 +30,8 @@ except ImportError:
             return []
 # ----------------------------------------------------------------------------------
 
+# These are global variables - Against best practices
+
 # Options for the combobox of conditions
 CONDITION_OPTIONS = [
         "New", 
@@ -39,11 +41,15 @@ CONDITION_OPTIONS = [
         "For Parts/Not Working"
     ]
 
+# Used for getting the index of a current listing
+GLOBAL_SELECTED_INDEX = None
+
 # Binds the cancel button to close the current window
 def bind_cancel_button(window):
     if hasattr(window, "CancelButton"):
         window.CancelButton.clicked.connect(window.close)
 
+# Responsible for my Edit Current Listing Window/GUI
 class EditListingForm(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -55,6 +61,87 @@ class EditListingForm(QtWidgets.QMainWindow):
             
             # Set the first option "New" as the default selection
             self.ConditionOptions.setCurrentIndex(0)
+        self.EditListingButton.clicked.connect(self.process_and_edit_listing)
+        self.mongo = Mongo()
+        self.load_listing_data()
+
+    # HAND CODED BY VINCE VAGAY
+    def load_listing_data(self):
+        
+        # Testing to see if the current listing index was correctly passed
+        index = GLOBAL_SELECTED_INDEX
+
+        print(self.mongo.get_StoredListings()[index].ListingTitle)
+
+        # A. Fill Text/Input Fields (using setPlainText for QPlainTextEdit)
+        self.ListingNameInput.setPlainText(self.mongo.get_StoredListings()[index].ListingTitle)
+        self.ListingDescInput.setPlainText(self.mongo.get_StoredListings()[index].Description)
+        self.ListingPriceInput.setPlainText(f"{self.mongo.get_StoredListings()[index].ListingPrice:.2f}") # Format price to 2 decimal places
+        self.ListingSNameInput.setPlainText(self.mongo.get_StoredListings()[index].SellerName)
+        self.ListingSPhoneInput.setPlainText(self.mongo.get_StoredListings()[index].PhoneNum)
+        self.ListingSEmailInput.setPlainText(self.mongo.get_StoredListings()[index].Email)
+
+    def process_and_edit_listing(self):
+        # It is the bridge between GUI widgets and the processing logic.
+        # 1. PULL raw data from widgets
+        name = self.ListingNameInput.toPlainText()
+        condition = self.ConditionOptions.currentText()
+        desc = self.ListingDescInput.toPlainText()
+        price_str = self.ListingPriceInput.toPlainText()
+        seller_name = self.ListingSNameInput.toPlainText()
+        seller_phone = self.ListingSPhoneInput.toPlainText()
+        seller_email = self.ListingSEmailInput.toPlainText()
+        
+        # Initialisting just in case
+        price = None
+
+        # 2. Validation & Conversion (GUI Responsibility)
+        try:
+            price = float(f"{float(price_str):.2f}")
+        except ValueError:
+            # Handle the error and display messages
+            QtWidgets.QMessageBox.critical(self, "Input Error", "Please input a valid price")
+            # 1. Clear the bad input from the widget
+            self.ListingPriceInput.clear()
+            # 2. Set focus back to the widget for easy re-entry
+            self.ListingPriceInput.setFocus()
+            # 3. Stop execution immediately
+            return
+        
+        # For Testing
+        # # Print price as initial input
+        # print(name,condition,desc,price_str,seller_name,seller_phone,seller_email)
+        # # Print price as converted
+        # print(name,condition,desc,price,seller_name,seller_phone,seller_email)
+
+        # Creates link to Mongo
+        temp_mongo_instance = Mongo()
+        # Temporary mongo instance
+        temp_crud_processor = processing.CRUD(temp_mongo_instance)
+
+        # Global Variable for current listing Index
+        index = GLOBAL_SELECTED_INDEX
+
+        # 3. Call the EditListing method on the new CRUD object, passing the parameters.
+        EditListing = temp_crud_processor.EditListing(
+            # Give it back it's original 6 Digit Unique Code
+            listing_code = (self.mongo.get_StoredListings()[index].gen),
+            name = name,
+            condition = condition,
+            price = price,        # Ensure this is the converted float price
+            seller_name = seller_name,
+            seller_phone = seller_phone,
+            seller_email = seller_email,
+            desc = desc,        # Description
+            index = index,
+            image_url = None # COMING FEATURE NO IMPLEMENTED
+        )
+    
+        # 4. Handle the result and PUSH feedback to the GUI
+        if EditListing:
+            print(f"FAILURE: Could not add {name}.")
+        else:
+            print(f"Success {name} updated.")
 
 class EditListingWindow(QMainWindow):
     def __init__(self):
@@ -111,6 +198,7 @@ class EditListingWindow(QMainWindow):
             }
         """)
 
+# Responsible for my Add New Listing Window/GUI
 class AddListingForm(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -122,6 +210,62 @@ class AddListingForm(QtWidgets.QMainWindow):
             
             # Set the first option "New" as the default selection
             self.ConditionOptions.setCurrentIndex(0)
+        self.AddListingButton.clicked.connect(self.process_and_add_listing)
+
+    def process_and_add_listing(self):
+        # It is the bridge between GUI widgets and the processing logic.
+        # 1. PULL raw data from widgets
+        name = self.ListingNameInput.toPlainText()
+        condition = self.ConditionOptions.currentText()
+        desc = self.ListingDescInput.toPlainText()
+        price_str = self.ListingPriceInput.toPlainText()
+        seller_name = self.ListingSNameInput.toPlainText()
+        seller_phone = self.ListingSPhoneInput.toPlainText()
+        seller_email = self.ListingSEmailInput.toPlainText()
+        
+        # Initialisting just in case
+        price = None
+
+        # 2. Validation & Conversion (GUI Responsibility)
+        try:
+            price = float(f"{float(price_str):.2f}")
+        except ValueError:
+            # Handle the error and display messages
+            QtWidgets.QMessageBox.critical(self, "Input Error", "Please input a valid price")
+            # 1. Clear the bad input from the widget
+            self.ListingPriceInput.clear()
+            # 2. Set focus back to the widget for easy re-entry
+            self.ListingPriceInput.setFocus()
+            # 3. Stop execution immediately
+            return
+        
+        # # For Testing
+        # # Print price as initial input
+        # print(name,condition,desc,price_str,seller_name,seller_phone,seller_email)
+        # # Print price as converted
+        # print(name,condition,desc,price,seller_name,seller_phone,seller_email)
+
+        # Creates link to Mongo
+        temp_mongo_instance = Mongo()
+        # Temporary mongo instance
+        temp_crud_processor = processing.CRUD(temp_mongo_instance)
+        
+        # 3. Call the AddListing method on the new CRUD object, passing the parameters.
+        AddedListing = temp_crud_processor.AddListing(
+            name = name,
+            condition = condition,
+            price = price,        # Ensure this is the converted float price
+            seller_name = seller_name,
+            seller_phone = seller_phone,
+            seller_email = seller_email,
+            desc = desc           # Description
+        )
+    
+        # 4. Handle the result and PUSH feedback to the GUI
+        if AddedListing:
+            print(f"Success {name} added.")
+        else:
+            print(f"FAILURE: Could not add {name}.")
 
 class AddListingWindow(QMainWindow):
     def __init__(self):
@@ -176,6 +320,11 @@ class AddListingWindow(QMainWindow):
                 background-color: #385B75; 
                 color: white;
             }
+            /* Specific Hover State for Edit Listing Button */
+            QPushButton#EditListingButton:hover {
+                background-color: #385B75; 
+                color: white;
+            }
         """)
         
 # Everything below this line is purely AI coded, I only added \t to the listbox string formatting
@@ -183,6 +332,90 @@ class AddListingWindow(QMainWindow):
 
 
 class MarketplaceTester(QMainWindow):
+    # The following code before the __init__ was done in assistance from Google's Gemini and done by Vince
+    def refresh_listings(self):
+        # 1. Clear all existing items from the list widget
+        self.listWidget.clear()
+        
+        # Reset the selection state and output label
+        self.current_selected_code = None
+        self.output_label.setText("Select an item to view details or edit/delete.")
+        
+        # 2. Get the updated list of listings from the database
+        listings = self.crud_processor.GetListings()
+        
+        if not listings:
+            QListWidgetItem("No listings found in the database.", self.listWidget)
+            self.EditListingButton.setEnabled(False)
+            self.DeleteListingButton.setEnabled(False)
+            return
+
+        # 3. Re-populate the list widget with the new data
+        for listing in listings:
+            item_text = listing.MarketListingInfo()
+            item = QListWidgetItem(item_text, self.listWidget)
+            # Store the unique 'gen' code in the item's UserRole for robust retrieval
+            item.setData(Qt.UserRole, listing.gen)
+            item.setFont(QFont("Arial", 10))
+            
+        # Refresh current listings and UI
+        self.current_listings = self.all_listings[:]
+        self.load_listings(self.current_listings)
+        
+    def delete_selected_listing(self):
+        # Creates link to Mongo
+        temp_mongo_instance = Mongo()
+        # Temporary mongo instance
+        temp_crud_processor = processing.CRUD(temp_mongo_instance)
+
+        # Global Variable for current listing Index
+        index = GLOBAL_SELECTED_INDEX
+
+        # print(index)
+        Delete = temp_crud_processor.DeleteListing(index)
+
+        if not self.listWidget or not self.db_manager:
+            QMessageBox.warning(self, "Setup Error", "Database manager or List Widget not initialized.")
+            return
+
+        selected_row = self.listWidget.currentRow()
+
+        # Adjust index because we added a header and separator line
+        data_index = selected_row - 2 
+
+        if data_index < 0 or data_index >= len(self.current_listings):
+            # Check if user selected the header or separator, or nothing
+            if selected_row > 1: # Only show warning if a data row wasn't clicked
+                 QMessageBox.warning(self, "Selection Required", "Please select a valid listing to delete first.")
+            return
+
+        # Get the listing object to confirm with the user
+        listing_to_delete = self.current_listings[data_index]
+        title = listing_to_delete.GetListingTitle()
+
+        # Confirmation Dialog
+        reply = QMessageBox.question(
+            self, 
+            'Confirm Deletion',
+            f"Are you sure you want to delete the listing: \n'{title}'?",
+            QMessageBox.Yes | QMessageBox.No, 
+            QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            print(f"User confirmed deletion of: {title}. (Database deletion logic pending)")
+            
+            # Find and delete the item from the master list
+            try:
+                self.all_listings.pop(self.all_listings.index(listing_to_delete))
+            except ValueError:
+                pass # Already deleted or not found
+            
+        # Refresh current listings and UI
+        self.current_listings = self.all_listings[:]
+        self.load_listings(self.current_listings)
+            
+    # Opens the Add New Listing Window
     def open_add_listing_form(self):
         self.add_listing_window = AddListingForm()
 
@@ -199,6 +432,7 @@ class MarketplaceTester(QMainWindow):
         self.add_listing_window.show()
         self.add_listing_window.raise_()  # Bring it to front
 
+    # Opens the Edit Current Listing Window
     def open_edit_listing_form(self):
         self.edit_listing_window = EditListingForm()
 
@@ -215,6 +449,7 @@ class MarketplaceTester(QMainWindow):
         self.edit_listing_window.show()
         self.edit_listing_window.raise_()  # Bring it to front
 
+    # Constructor
     def __init__(self):
         super().__init__()
         
@@ -225,6 +460,15 @@ class MarketplaceTester(QMainWindow):
         self.add_listing_window = None # Keep a reference to prevent garbage collection
         
         ui_file_name = "ChurFindsUI.ui"
+
+        # Initialize
+        # 1. Create the Mongo object (which is still a local variable 'mongo')
+        mongo = Mongo()
+        
+        # 2. Create the CRUD object, referencing it from the processing module
+        #    AND store the results as instance variables (self.db_manager, self.crud_processor)
+        self.db_manager = mongo
+        self.crud_processor = processing.CRUD(self.db_manager)
         
         # --- 1. Load the UI file created in Qt Designer ---
         try:
@@ -334,9 +578,8 @@ class MarketplaceTester(QMainWindow):
                 self.AddListingsButton.clicked.connect(self.open_add_listing_form)
             if self.EditListingButton:
                 self.EditListingButton.clicked.connect(self.open_edit_listing_form)
-            # if self.DeleteListingButton:
-            #     self.DeleteListingButton.clicked.connect(self.load_listings)
-
+            if self.DeleteListingButton:
+                self.DeleteListingButton.clicked.connect(self.delete_selected_listing)
         else:
             print("WARNING: 'listWidget' (QListWidget) not found after UI initialization. Check objectName.")
 
@@ -442,7 +685,8 @@ class MarketplaceTester(QMainWindow):
             )
             
             self.listWidget.addItem(formatted_item)
-            
+
+    # For each time the user clicks on the listbox
     def handle_listing_click(self, row_index):
         # Called when a list item is clicked.
         
@@ -463,7 +707,25 @@ class MarketplaceTester(QMainWindow):
             if hasattr(self, 'output_label') and self.output_label is not None:
                 self.output_label.setText("Select a listing above to see details.")
             print("Selection cleared or invalid.")
+        
+        # Adjust index because we added a header (index 0) and separator line (index 1)
+        data_index = row_index - 2 
 
+        if data_index >= 0 and data_index < len(self.current_listings):
+            clicked_listing_obj = self.current_listings[data_index]
+            
+            # --- CRITICAL CHANGE: Store the index, not the unique code ---
+            self.selected_listing_index = data_index 
+
+            # --- OUTPUT: Only prints the index (as requested) ---
+            print(f"Selected Listing Index (in current_listings): {self.selected_listing_index}")
+
+            global GLOBAL_SELECTED_INDEX
+            GLOBAL_SELECTED_INDEX = int(self.selected_listing_index)
+            
+            # Update the output label for visual confirmation (optional)
+            if hasattr(self, 'output_label') and self.output_label is not None:
+                self.output_label.setText(f"Listing at index {self.selected_listing_index} selected. Click 'Edit Listing' to modify.")
 
     # --- Fallback UI for testing without the .ui file (PURE LAYOUT) ---
     def setup_fallback_ui(self):
@@ -477,6 +739,7 @@ class MarketplaceTester(QMainWindow):
         self.AddListingsButton = QPushButton("Add Listing", objectName='AddListingsButton')
         self.EditListingButton = QPushButton("Edit Listing", objectName='EditListingButton')
         self.DeleteListingButton = QPushButton("Delete Listing", objectName='DeleteListingButton')
+        self.RefreshButton = QPushButton("Refresh Listings", objectName='RefreshButton')
         
         self.setWindowTitle("Chur Finds Marketplace - Fallback UI")
         # Window size remains at 1400px wide
@@ -576,16 +839,26 @@ class MarketplaceTester(QMainWindow):
         # Connect the Add Listing button to the new method
         self.AddListingsButton.clicked.connect(self.open_add_listing_form)
 
-        # Connect the Add Listing button to the new method
+        # Connect the Edit Listing button to the new method
         self.EditListingButton.clicked.connect(self.open_edit_listing_form)
 
+        # Connect the Add Listing button to the new method
+        self.DeleteListingButton.clicked.connect(processing.DeleteListing(GLOBAL_SELECTED_INDEX))
+
+        #
+        self.RefreshButton.click.connect(self.refresh_listings)
+
 if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    app.setStyle("Fusion") 
+    
     # This message will only appear if the imports failed
     if 'Mongo' in globals() and 'MarketPlace' in globals() and not hasattr(MarketPlace, 'GetListingTitle'):
         print("Mongo failed to import.")
-        
-    app = QApplication(sys.argv)
-    app.setStyle("Fusion") 
     window = MarketplaceTester()
+    
+    # 3. Show the main window
     window.show()
+    
+    # 4. Start the application's event loop
     sys.exit(app.exec_())

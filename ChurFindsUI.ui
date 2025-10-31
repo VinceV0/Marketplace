@@ -41,7 +41,7 @@ QWidget#centralwidget {
    <widget class="QLabel" name="CompanyName">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>145</x>
       <y>0</y>
       <width>551</width>
       <height>121</height>
@@ -334,6 +334,19 @@ font-size: 8pt;
      <string>Items</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="RefreshButton">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>130</y>
+      <width>65</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Refresh</string>
+    </property>
+   </widget>
    <zorder>CompanyLogo</zorder>
    <zorder>listWidget</zorder>
    <zorder>DeleteListingButton</zorder>
@@ -341,6 +354,7 @@ font-size: 8pt;
    <zorder>AddListingButton</zorder>
    <zorder>CompanyName</zorder>
    <zorder>FormTitle</zorder>
+   <zorder>RefreshButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
